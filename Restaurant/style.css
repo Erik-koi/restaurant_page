@@ -29,19 +29,25 @@ body::before {
 .top-left {
   position: absolute;
   top: 20px;
-  right: 90px;
+  right: 10px;
   z-index: 10;
 }
 
 .top-right {
   position: absolute;
   top: 20px;
-  right: 30px;
+  right: 50px;
   z-index: 10;
 }
-
+echo "# deploy-to-render" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Erik-koi/deploy-to-render.git
+git push -u origin main
 .icon-btn {
-  background: white;
+  background: rgba(255, 255, 255, 0);
   border: none;
   border-radius: 50%;
   padding: 8px;
