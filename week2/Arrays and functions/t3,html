@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Even Numbers</title>
+  </head>
+  <body>
+    <div id="target"></div>
+    <script src="t3.js"></script>
+  </body>
+</html>

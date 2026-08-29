@@ -39,13 +39,7 @@ body::before {
   right: 50px;
   z-index: 10;
 }
-echo "# deploy-to-render" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/Erik-koi/deploy-to-render.git
-git push -u origin main
+
 .icon-btn {
   background: rgba(255, 255, 255, 0);
   border: none;
