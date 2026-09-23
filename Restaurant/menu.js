@@ -15,7 +15,9 @@ let currentRestaurant = null;
 
 function getCurrentUser() {
   try {
-    return JSON.parse(localStorage.getItem("restaurant_current_user") || "null");
+    return JSON.parse(
+      localStorage.getItem("restaurant_current_user") || "null",
+    );
   } catch {
     return null;
   }
@@ -26,7 +28,9 @@ async function getFavorites() {
   if (!user?.email) return [];
 
   try {
-    const res = await fetch(`${FAVORITES_API}?email=${encodeURIComponent(user.email)}`);
+    const res = await fetch(
+      `${FAVORITES_API}?email=${encodeURIComponent(user.email)}`,
+    );
     if (!res.ok) throw new Error("Failed to load favorites");
     const data = await res.json();
     return Array.isArray(data) ? data : [];
@@ -63,10 +67,16 @@ async function removeFavorite(restaurantId) {
 
 function updateFavoriteButton() {
   if (!favoriteRestaurantBtn || !currentRestaurant) return;
-  const active = currentRestaurant && restaurantsCache.some((restaurant) => {
-    return restaurant._id === currentRestaurant._id && getCurrentUser()?.email;
-  });
-  favoriteRestaurantBtn.textContent = active ? "Remove from favorites" : "Add to favorites";
+  const active =
+    currentRestaurant &&
+    restaurantsCache.some((restaurant) => {
+      return (
+        restaurant._id === currentRestaurant._id && getCurrentUser()?.email
+      );
+    });
+  favoriteRestaurantBtn.textContent = active
+    ? "Remove from favorites"
+    : "Add to favorites";
   favoriteRestaurantBtn.classList.toggle("active", active);
 }
 
@@ -75,7 +85,8 @@ async function renderFavorites() {
 
   const user = getCurrentUser();
   if (!user?.email) {
-    favoritesBar.innerHTML = '<p class="favorites-empty">Register or log in to save favorite restaurants.</p>';
+    favoritesBar.innerHTML =
+      '<p class="favorites-empty">Register or log in to save favorite restaurants.</p>';
     return;
   }
 
@@ -85,7 +96,8 @@ async function renderFavorites() {
   );
 
   if (!favoriteRestaurants.length) {
-    favoritesBar.innerHTML = '<p class="favorites-empty">No favorite restaurants yet.</p>';
+    favoritesBar.innerHTML =
+      '<p class="favorites-empty">No favorite restaurants yet.</p>';
     return;
   }
 
@@ -125,7 +137,10 @@ async function renderFavoriteIndicators() {
     const active = favorites.includes(id);
     button.textContent = active ? "♥" : "♡";
     button.classList.toggle("active", active);
-    button.setAttribute("aria-label", active ? "Remove favorite" : "Add favorite");
+    button.setAttribute(
+      "aria-label",
+      active ? "Remove favorite" : "Add favorite",
+    );
   });
 }
 
@@ -157,7 +172,9 @@ async function loadRestaurants() {
     const res = await fetch(`${API}/restaurants`);
     if (!res.ok) throw new Error("Failed to load restaurants");
 
-    restaurantsCache = (await res.json()).sort((a, b) => a.name.localeCompare(b.name));
+    restaurantsCache = (await res.json()).sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
     restaurantList.innerHTML = "";
 
     restaurantsCache.forEach((restaurant) => {
@@ -190,7 +207,8 @@ async function loadRestaurants() {
     await renderFavoriteIndicators();
     await renderFavorites();
   } catch (err) {
-    restaurantList.innerHTML = '<p class="empty-menu">Could not load restaurants. Are you on Metropolia network / VPN?</p>';
+    restaurantList.innerHTML =
+      '<p class="empty-menu">Could not load restaurants. Are you on Metropolia network / VPN?</p>';
     console.error(err);
   }
 }
@@ -204,7 +222,9 @@ async function showMenu(restaurant) {
 
   const favorites = await getFavorites();
   const isActive = favorites.includes(restaurant._id);
-  favoriteRestaurantBtn.textContent = isActive ? "Remove from favorites" : "Add to favorites";
+  favoriteRestaurantBtn.textContent = isActive
+    ? "Remove from favorites"
+    : "Add to favorites";
   favoriteRestaurantBtn.classList.toggle("active", isActive);
 
   try {
@@ -250,4 +270,3 @@ if (menuOverlay) menuOverlay.addEventListener("click", closeMenu);
 if (closeMenuBtn) closeMenuBtn.addEventListener("click", closeMenu);
 
 loadRestaurants();
-
